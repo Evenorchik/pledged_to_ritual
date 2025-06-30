@@ -224,6 +224,8 @@ restart_node() {
 #
 uninstall_node() {
   docker compose -f "$REPO_DIR/deploy/docker-compose.yaml" down || true
+  docker stop hello-world
+  docker remove hello-world
   docker image ls -a | grep infernet | awk '{print $3}' | xargs -r docker rmi -f
   rm -rf "$REPO_DIR" "$HOME/foundry" "$HOME/.foundry"
   echo -e "${GREEN}Infernet node removed.${NC}"
